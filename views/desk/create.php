@@ -30,7 +30,8 @@ $form = ActiveForm::begin([
 echo $form->field($model, 'title')->textInput();
 echo $form->field($model, 'description')->textarea();
 echo $form->field($model, 'deadline')->widget(DatePicker::class, [
-    'options' => ['class' => 'form-control']
+    'options' => ['class' => 'form-control'],
+    'dateFormat' => 'yyyy-MM-dd'
 ]);
 echo $form->field($model, 'status')->dropDownList(
     Status::find()->select(['title', 'id'])->indexBy('id')->column()

@@ -16,6 +16,19 @@ class TaskForm extends Model
     {
         return [
             [['title', 'status', 'assignee'], 'required', 'message' => 'required'],
+            [['deadline'], 'date', 'format' => 'php:Y-m-d'],
+            [['deadline', 'description'], 'default']
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'title' => 'Title',
+            'description' => 'Description',
+            'deadline' => 'Deadline',
+            'assignee' => 'Assignee',
+            'status' => 'Status',
         ];
     }
 }

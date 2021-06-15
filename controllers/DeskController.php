@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\TaskForm;
+use app\models\User;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -70,8 +71,19 @@ class DeskController extends Controller
         return $this->render('create', compact('model'));
     }
 
-    public function actionDetail($id)
+    public function actionView($id)
     {
+        $model = Task::findOne($id);
+        return $this->render('view', compact('model'));
+    }
 
+    public function actionUpdate($id)
+    {
+    }
+
+    public function actionDelete($id)
+    {
+        Task::deleteAll(['id' => $id]);
+        return $this->redirect('/desk');
     }
 }
