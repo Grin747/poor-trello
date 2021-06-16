@@ -50,7 +50,8 @@ class DeskController extends Controller
     {
         $model = new TaskForm();
 
-        if($model->load(Yii::$app->request->post()) && $model->validate()){
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
             $task = new Task();
 
             $task->title = $model->title;

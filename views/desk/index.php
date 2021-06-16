@@ -31,7 +31,7 @@ $dataProvider = new ActiveDataProvider([
         'deadline',
         ['attribute' => 'author','label' => 'Author', 'value'=>'author.username'],
         ['attribute' => 'assignee','label' => 'Assignee', 'value'=>'assignee.username'],
-        [ 'class' => 'yii\grid\ActionColumn']
+        ['class' => 'yii\grid\ActionColumn']
     ],
 ]) ?>
 
