@@ -16,7 +16,7 @@ class TaskForm extends Model
     {
         return [
             [['title', 'status', 'assignee'], 'required', 'message' => 'required'],
-            [['deadline'], 'date', 'format' => 'php:Y-m-d'],
+            [['deadline'], 'date', 'format' => 'yyyy-MM-dd'],
             [['deadline', 'description'], 'default']
         ];
     }

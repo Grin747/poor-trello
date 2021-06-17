@@ -14,7 +14,7 @@ class CommentForm extends Model
     public function rules()
     {
         return [
-            [['value', 'task_id'], 'required']
+            [['value', 'task_id'], 'required', 'message' => 'required']
         ];
     }
 

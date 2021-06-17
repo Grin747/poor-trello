@@ -4,9 +4,8 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\TaskForm;
-use app\models\User;
+use app\models\TaskSearch;
 use Yii;
-use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,13 +36,10 @@ class DeskController extends Controller
 
     public function actionIndex()
     {
-        $query = Task::find()->with('status')->with('author')->with('assignee');
-        $pages = new Pagination(['totalCount' => $query->count()]);
-        $models = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $searchModel = new TaskSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
 
-        return $this->render('index', compact('models', 'pages'));
+        return $this->render('index', compact('dataProvider', 'searchModel'));
     }
 
     public function actionCreate()

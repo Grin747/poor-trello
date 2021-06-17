@@ -4,6 +4,8 @@
 
 use app\models\Comment;
 use app\models\CommentForm;
+use app\models\Loss;
+use app\models\LossForm;
 use app\models\Task;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
@@ -24,12 +26,21 @@ echo DetailView::widget([
     ]
 ]);
 
-$dataProvider = new ActiveDataProvider([
+$commentDataProvider = new ActiveDataProvider([
     'query' => Comment::find()->where(['task_id' => $model->id]),
     'pagination' => [
         'pageSize' => 20,
     ],
 ]);
+
+$lossDataProvider = new ActiveDataProvider([
+    'query' => Loss::find()->where(['task_id' => $model->id]),
+    'pagination' => [
+        'pageSize' => 20,
+    ],
+]);
+
+$this->title = 'Task #' . $model->id;
 
 ?>
 
@@ -42,12 +53,11 @@ $dataProvider = new ActiveDataProvider([
     $comment = new CommentForm();
     $form = ActiveForm::begin([
         'id' => 'comment-form',
-        'options' => ['class' => 'form-horizontal'],
         'action' => Url::toRoute('/comment/create')
     ]);
 
     echo $form->field($comment, 'task_id')->hiddenInput(['value' => $model->id])->label(false);
-    echo $form->field($comment, 'value')->textarea(['rows' => 6]);
+    echo $form->field($comment, 'value')->textarea(['rows' => 5, 'class' => 'form-control']);
 
     ?>
 
@@ -60,7 +70,7 @@ $dataProvider = new ActiveDataProvider([
     ActiveForm::end();
 
     echo GridView::widget([
-        'dataProvider' => $dataProvider,
+        'dataProvider' => $commentDataProvider,
         'columns' => [
             ['attribute' => 'author', 'label' => 'Author', 'value' => 'author.username'],
             ['attribute' => 'value', 'label' => 'Comment'],
@@ -77,21 +87,20 @@ $dataProvider = new ActiveDataProvider([
 
     <?php
 
-    $comment = new CommentForm();
+    $loss = new LossForm();
     $form = ActiveForm::begin([
         'id' => 'time-form',
-        'options' => ['class' => 'form-horizontal'],
-        'action' => Url::toRoute('/comment/create')
+        'action' => Url::toRoute('/loss/create')
     ]);
 
-    echo $form->field($comment, 'task_id')->hiddenInput(['value' => $model->id])->label(false);
-    echo $form->field($comment, 'value')->textInput();
-    echo $form->field($comment, 'value')->textarea(['rows' => 2]);
+    echo $form->field($loss, 'task_id')->hiddenInput(['value' => $model->id])->label(false);
+    echo $form->field($loss, 'loss')->textInput();
+    echo $form->field($loss, 'title')->TextInput();
 
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Comment', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        <?= Html::submitButton('Add loss', ['class' => 'btn btn-primary', 'name' => 'time-button']) ?>
     </div>
 
     <?php
@@ -99,10 +108,11 @@ $dataProvider = new ActiveDataProvider([
     ActiveForm::end();
 
     echo GridView::widget([
-        'dataProvider' => $dataProvider,
+        'dataProvider' => $lossDataProvider,
         'columns' => [
             ['attribute' => 'author', 'label' => 'Author', 'value' => 'author.username'],
-            ['attribute' => 'value', 'label' => 'Comment'],
+            'title',
+            'loss'
         ]
     ]); ?>
 
