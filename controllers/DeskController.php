@@ -6,6 +6,7 @@ use app\models\Task;
 use app\models\TaskForm;
 use app\models\TaskSearch;
 use Yii;
+use yii\base\BaseObject;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,6 +77,34 @@ class DeskController extends Controller
 
     public function actionUpdate($id)
     {
+        $task = Task::findOne($id);
+        if (Yii::$app->user->id != $task->author_id) return $this->redirect('/desk');
+
+        $model = new TaskForm();
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            $task->title = $model->title;
+            $task->description = $model->description;
+            $task->deadline = $model->deadline;
+            $task->assignee_id = $model->assignee;
+            $task->status_id = $model->status;
+
+            if($task->save()){
+                Yii::$app->session->setFlash('success', 'Task updated');
+                return $this->redirect('/desk');
+            }
+            Yii::$app->session->setFlash('error', 'Error');
+        }
+        else
+        {
+            $model->title = $task->title;
+            $model->description = $task->description;
+            $model->deadline = $task->deadline;
+            $model->assignee = $task->assignee_id;
+            $model->status = $task->status_id;
+        }
+
+        return $this->render('update', compact('model'));
     }
 
     public function actionDelete($id)

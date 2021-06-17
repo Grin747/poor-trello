@@ -9,17 +9,17 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
-$this->title = 'Create task';
+$this->title = 'Update task';
 ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to create task:</p>
+    <p>Please fill out the following fields to update task:</p>
 
 <?php
 
 $form = ActiveForm::begin([
-    'id' => 'task-create-form',
+    'id' => 'task-update-form',
     'layout' => 'horizontal',
     'fieldConfig' => [
         'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
@@ -42,7 +42,7 @@ echo $form->field($model, 'assignee')->dropDownList(
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Create', ['class' => 'btn btn-success', 'name' => 'create-button']) ?>
+            <?= Html::submitButton('Update', ['class' => 'btn btn-success', 'name' => 'update-button']) ?>
         </div>
     </div>
 

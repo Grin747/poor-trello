@@ -41,6 +41,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'desk/task/<id:\d+>' => 'desk/view',
+                'desk/update/<id:\d+>' => 'desk/update',
+                'desk/delete/<id:\d+>' => 'desk/delete'
             ],
         ],
     ],
