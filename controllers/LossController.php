@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Loss;
-use app\models\LossForm;
+use app\models\domain\Loss;
+use app\models\forms\LossForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -12,7 +12,10 @@ use yii\web\NotFoundHttpException;
 
 class LossController extends Controller
 {
-    public function behaviors()
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -34,6 +37,9 @@ class LossController extends Controller
         ];
     }
 
+    /**
+     * Creates loss.
+     */
     public function actionCreate()
     {
         $form = new LossForm();

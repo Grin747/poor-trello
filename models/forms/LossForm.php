@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
 use yii\base\Model;
 
 class LossForm extends Model
 {
-    public $title;
-    public $loss;
-    public $task_id;
+    public string $title;
+    public int $loss;
+    public int $task_id;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['loss', 'title', 'task_id'], 'required', 'message' => 'required'],
@@ -19,7 +19,7 @@ class LossForm extends Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return ['value' => 'Comment', 'loss' => 'Loss'];
     }

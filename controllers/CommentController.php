@@ -3,8 +3,8 @@
 
 namespace app\controllers;
 
-use app\models\Comment;
-use app\models\CommentForm;
+use app\models\domain\Comment;
+use app\models\forms\CommentForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -13,7 +13,10 @@ use yii\web\NotFoundHttpException;
 
 class CommentController extends Controller
 {
-    public function behaviors()
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -35,6 +38,9 @@ class CommentController extends Controller
         ];
     }
 
+    /**
+     * Creates a comment.
+     */
     public function actionCreate()
     {
         $form = new CommentForm();

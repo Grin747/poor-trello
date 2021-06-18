@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\domain;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -19,19 +20,25 @@ use yii\db\ActiveRecord;
  */
 class Loss extends ActiveRecord
 {
-    public static function tableName()
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName(): string
     {
         return 'timelosses';
     }
 
-    public function rules()
+    /**
+     * {@inheritdoc}
+     */
+    public function rules(): array
     {
         return [
             [['loss', 'title', 'created', 'author_id', 'task_id'], 'required']
         ];
     }
 
-    public function getAuthor()
+    public function getAuthor(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
     }

@@ -1,12 +1,12 @@
 <?php
 
 /* @var $model Task */
+/* @var $commentDataProvider ActiveDataProvider */
+/* @var $lossDataProvider ActiveDataProvider */
 
-use app\models\Comment;
-use app\models\CommentForm;
-use app\models\Loss;
-use app\models\LossForm;
-use app\models\Task;
+use app\models\forms\CommentForm;
+use app\models\forms\LossForm;
+use app\models\domain\Task;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
@@ -18,27 +18,17 @@ echo DetailView::widget([
     'model' => $model,
     'options' => ['class' => 'table table-hover'],
     'attributes' => [
+        'id',
         'title',
         'description:html',
         'created',
         'deadline',
-        ['label' => 'Author', 'value' => $model->author->username]
+        ['label' => 'Assignee', 'value' => $model->assignee->username],
+        ['label' => 'Author', 'value' => $model->author->username],
+        ['label' => 'Status', 'value' => $model->status->title]
     ]
 ]);
 
-$commentDataProvider = new ActiveDataProvider([
-    'query' => Comment::find()->where(['task_id' => $model->id]),
-    'pagination' => [
-        'pageSize' => 20,
-    ],
-]);
-
-$lossDataProvider = new ActiveDataProvider([
-    'query' => Loss::find()->where(['task_id' => $model->id]),
-    'pagination' => [
-        'pageSize' => 20,
-    ],
-]);
 
 $this->title = 'Task #' . $model->id;
 

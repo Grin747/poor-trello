@@ -1,8 +1,9 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\domain;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -19,19 +20,25 @@ use yii\db\ActiveRecord;
  */
 class Comment extends ActiveRecord
 {
-    public static function tableName()
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName(): string
     {
         return 'comments';
     }
 
-    public function rules()
+    /**
+     * {@inheritdoc}
+     */
+    public function rules(): array
     {
         return [
             [['value', 'created', 'author_id', 'task_id'], 'required']
         ];
     }
 
-    public function getAuthor()
+    public function getAuthor(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
     }

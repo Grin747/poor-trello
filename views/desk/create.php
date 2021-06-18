@@ -2,9 +2,9 @@
 
 /* @var $model TaskForm */
 
-use app\models\Status;
-use app\models\TaskForm;
-use app\models\User;
+use app\models\domain\Status;
+use app\models\forms\TaskForm;
+use app\models\domain\User;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\jui\DatePicker;

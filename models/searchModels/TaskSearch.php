@@ -4,19 +4,20 @@
 namespace app\models;
 
 
+use app\models\domain\Task;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 class TaskSearch extends Model
 {
-    public $title;
-    public $status;
-    public $created;
-    public $deadline;
-    public $author;
-    public $assignee;
+    public string $title;
+    public int $status;
+    public string $created;
+    public string $deadline;
+    public int $author;
+    public int $assignee;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['status', 'author', 'assignee'], 'integer'],
@@ -25,7 +26,7 @@ class TaskSearch extends Model
         ];
     }
 
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $query = Task::find();
 

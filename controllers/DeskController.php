@@ -2,18 +2,24 @@
 
 namespace app\controllers;
 
-use app\models\Task;
-use app\models\TaskForm;
+use app\models\domain\Comment;
+use app\models\domain\Loss;
+use app\models\domain\Task;
+use app\models\forms\TaskForm;
 use app\models\TaskSearch;
 use Yii;
-use yii\base\BaseObject;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class DeskController extends Controller
 {
-    public function behaviors()
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -35,7 +41,12 @@ class DeskController extends Controller
         ];
     }
 
-    public function actionIndex()
+    /**
+     * Displays desk page.
+     *
+     * @return Response|string
+     */
+    public function actionIndex(): string
     {
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
@@ -43,6 +54,11 @@ class DeskController extends Controller
         return $this->render('index', compact('dataProvider', 'searchModel'));
     }
 
+    /**
+     * Creates task.
+     *
+     * @return Response|string
+     */
     public function actionCreate()
     {
         $model = new TaskForm();
@@ -69,12 +85,36 @@ class DeskController extends Controller
         return $this->render('create', compact('model'));
     }
 
-    public function actionView($id)
+    /**
+     * Displays detail task view.
+     *
+     * @return Response|string
+     */
+    public function actionView($id): string
     {
-        $model = Task::findOne($id);
-        return $this->render('view', compact('model'));
+        $model = Task::findOne($id) ?? $this->redirect('/desk');
+
+        $commentDataProvider = new ActiveDataProvider([
+            'query' => Comment::find()->where(['task_id' => $model->id]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        $lossDataProvider = new ActiveDataProvider([
+            'query' => Loss::find()->where(['task_id' => $model->id]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('view', compact('model', 'commentDataProvider', 'lossDataProvider'));
     }
 
+    /**
+     * Displays contact page.
+     *
+     * @return Response|string
+     */
     public function actionUpdate($id)
     {
         $task = Task::findOne($id);
@@ -107,9 +147,16 @@ class DeskController extends Controller
         return $this->render('update', compact('model'));
     }
 
-    public function actionDelete($id)
+    /**
+     * Deletes task.
+     *
+     * @param $id
+     * @return Response
+     */
+    public function actionDelete($id): Response
     {
-        Task::deleteAll(['id' => $id]);
+        $rows = Task::deleteAll(['id' => $id]);
+        if ($rows != 1) Yii::$app->session->setFlash('error', 'Error');
         return $this->redirect('/desk');
     }
 }

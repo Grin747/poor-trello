@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\domain;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -57,12 +57,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->id;
     }
 
-    public static function findByUsername($username)
+    public static function findByUsername($username): ?User
     {
         return User::findOne(['username' => $username]);
     }
 
-    public function validatePassword($password)
+    public function validatePassword($password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password);
     }

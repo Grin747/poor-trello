@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\domain;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -22,7 +23,7 @@ use yii\db\ActiveRecord;
  */
 class Task extends ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'tasks';
     }
@@ -30,7 +31,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'created'], 'required'],
@@ -48,7 +49,7 @@ class Task extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -62,17 +63,17 @@ class Task extends ActiveRecord
         ];
     }
 
-    public function getStatus()
+    public function getStatus(): ActiveQuery
     {
         return $this->hasOne(Status::class, ['id' => 'status_id']);
     }
 
-    public function getAuthor()
+    public function getAuthor(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
     }
 
-    public function getAssignee()
+    public function getAssignee(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'assignee_id']);
     }

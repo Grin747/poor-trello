@@ -3,9 +3,9 @@
 /* @var $dataProvider ActiveDataProvider */
 /* @var $searchModel TaskSearch */
 
-use app\models\Status;
+use app\models\domain\Status;
 use app\models\TaskSearch;
-use app\models\User;
+use app\models\domain\User;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;

@@ -1,16 +1,19 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\forms;
 
 
-class RegisterForm extends \yii\base\Model
+use app\models\domain\User;
+use yii\base\Model;
+
+class RegisterForm extends Model
 {
-    public $username;
-    public $password;
-    public $confirm;
+    public string $username;
+    public string $password;
+    public string $confirm;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['username', 'password', 'confirm'], 'required', 'message' => 'required'],

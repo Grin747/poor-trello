@@ -2,13 +2,12 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\RegisterForm */
+/* @var $model app\models\forms\RegisterForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Register';
-#$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-register">
     <h1><?= Html::encode($this->title) ?></h1>
